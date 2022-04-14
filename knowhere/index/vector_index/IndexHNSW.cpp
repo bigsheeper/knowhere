@@ -158,8 +158,8 @@ IndexHNSW::Query(const DatasetPtr& dataset_ptr, const Config& config, const fais
     std::chrono::high_resolution_clock::time_point query_start, query_end;
     query_start = std::chrono::high_resolution_clock::now();
 
-    std::cout << "close omp" << std::endl;
-//#pragma omp parallel for
+//    std::cout << "close omp" << std::endl;
+#pragma omp parallel for
     for (unsigned int i = 0; i < rows; ++i) {
         auto single_query = (float*)p_data + i * dim;
         std::priority_queue<std::pair<float, hnswlib::labeltype>> rst;
