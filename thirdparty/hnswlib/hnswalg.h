@@ -269,6 +269,7 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
             // bool cur_node_deleted = isMarkedDeleted(current_node_id);
 
 #ifdef USE_SSE
+            std::cout << "Knowhere def USE_SSE in search" << std::endl;
             _mm_prefetch((char *) (visited_array + *(data + 1)), _MM_HINT_T0);
             _mm_prefetch((char *) (visited_array + *(data + 1) + 64), _MM_HINT_T0);
             _mm_prefetch(data_level0_memory_ + (*(data + 1)) * size_data_per_element_ + offsetData_, _MM_HINT_T0);
