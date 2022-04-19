@@ -271,19 +271,19 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
 
 #ifdef USE_SSE
 //            std::cout << "Knowhere def USE_SSE in search" << std::endl;
-//            _mm_prefetch((char *) (visited_array + *(data + 1)), _MM_HINT_T0);
-//            _mm_prefetch((char *) (visited_array + *(data + 1) + 64), _MM_HINT_T0);
-//            _mm_prefetch(data_level0_memory_ + (*(data + 1)) * size_data_per_element_ + offsetData_, _MM_HINT_T0);
-//            _mm_prefetch((char *) (data + 2), _MM_HINT_T0);
+            _mm_prefetch((char *) (visited_array + *(data + 1)), _MM_HINT_T0);
+            _mm_prefetch((char *) (visited_array + *(data + 1) + 64), _MM_HINT_T0);
+            _mm_prefetch(data_level0_memory_ + (*(data + 1)) * size_data_per_element_ + offsetData_, _MM_HINT_T0);
+            _mm_prefetch((char *) (data + 2), _MM_HINT_T0);
 #endif
 
             for (size_t j = 1; j <= size; j++) {
                 int candidate_id = *(data + j);
                 // if (candidate_id == 0) continue;
 #ifdef USE_SSE
-//                _mm_prefetch((char *) (visited_array + *(data + j + 1)), _MM_HINT_T0);
-//                _mm_prefetch(data_level0_memory_ + (*(data + j + 1)) * size_data_per_element_ + offsetData_,
-//                             _MM_HINT_T0);////////////
+                _mm_prefetch((char *) (visited_array + *(data + j + 1)), _MM_HINT_T0);
+                _mm_prefetch(data_level0_memory_ + (*(data + j + 1)) * size_data_per_element_ + offsetData_,
+                             _MM_HINT_T0);////////////
 #endif
                 if (!(visited_array[candidate_id] == visited_array_tag)) {
 
@@ -295,9 +295,9 @@ class HierarchicalNSW : public AlgorithmInterface<dist_t> {
                     if (top_candidates.size() < ef || lowerBound > dist) {
                         candidate_set.emplace(-dist, candidate_id);
 #ifdef USE_SSE
-//                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ +
-//                                     offsetLevel0_,///////////
-//                                     _MM_HINT_T0);////////////////////////
+                        _mm_prefetch(data_level0_memory_ + candidate_set.top().second * size_data_per_element_ +
+                                     offsetLevel0_,///////////
+                                     _MM_HINT_T0);////////////////////////
 #endif
 
 //                        if (!has_deletions || !isMarkedDeleted(candidate_id))
