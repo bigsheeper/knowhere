@@ -74,6 +74,11 @@ void hook_fvec(std::string& simd_type) {
 
         simd_type = "REF";
     }
+
+    std::cout << "Knowhere faissHook, simd_type = " << simd_type << std::endl;
+#ifdef USE_SSE
+    std::cout << "Knowhere def USE_SSE" << std::endl;
+#endif
 }
 
 } // namespace faiss
