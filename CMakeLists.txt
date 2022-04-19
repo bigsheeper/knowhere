@@ -143,6 +143,7 @@ if ( CMAKE_BUILD_TYPE STREQUAL "Release" )
 else ()
     append_flags( CMAKE_CXX_FLAGS FLAGS "-O0" "-g" )
     append_flags( CUDA_NVCC_FLAGS FLAGS "-O0" "-g" )
+    add_compile_definitions(_DEBUG)
 endif ()
 
 append_flags( CMAKE_CXX_FLAGS

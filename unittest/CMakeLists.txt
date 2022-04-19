@@ -158,3 +158,9 @@ add_executable( test_knowhere ${ALL_INDEXING_SRCS} )
 target_link_libraries( test_knowhere knowhere ${DEPEND_LIBS} )
 
 install(TARGETS test_knowhere DESTINATION unittest)
+
+add_executable(perf_hnsw perf_hnsw2.cpp ${UTIL_SRCS})
+
+target_link_libraries( perf_hnsw knowhere ${DEPEND_LIBS} )
+
+install(TARGETS perf_hnsw DESTINATION unittest)
