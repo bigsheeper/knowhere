@@ -126,15 +126,16 @@ IndexHNSW::GetVectorById(const DatasetPtr& dataset_ptr, const Config& config) {
     LOG_KNOWHERE_INFO_ << "start get vector by id 1";
 
     GET_DATA_WITH_IDS(dataset_ptr)
+    auto dim_d = Dim();
 
     float* data = nullptr;
     try {
-        data = new float[dim * rows];
-        LOG_KNOWHERE_INFO_ << "start get vector by id 3, dim:" << dim << ", rows:" << rows;
+        data = new float[dim_d * rows];
+        LOG_KNOWHERE_INFO_ << "start get vector by id 3, dim:" << dim_d << ", rows:" << rows;
         for (int64_t i = 0; i < rows; i++) {
             int64_t id = p_ids[i];
             assert(id >= 0 && id < (int64_t)index_->cur_element_count);
-            std::copy_n((float*)index_->getDataByInternalId(id), dim, data + i * dim);
+            std::copy_n((float*)index_->getDataByInternalId(id), dim_d, data + i * dim_d);
         }
         return GenResultDataset(data);
     } catch (std::exception& e) {
