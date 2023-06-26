@@ -118,26 +118,32 @@ IndexHNSW::AddWithoutIds(const DatasetPtr& dataset_ptr, const Config& config) {
 
 DatasetPtr
 IndexHNSW::GetVectorById(const DatasetPtr& dataset_ptr, const Config& config) {
+    LOG_KNOWHERE_INFO_ << "start get vector by id 0";
     if (!index_) {
         KNOWHERE_THROW_MSG("index not initialize");
     }
+
+    LOG_KNOWHERE_INFO_ << "start get vector by id 1";
 
     GET_DATA_WITH_IDS(dataset_ptr)
 
     float* p_x = nullptr;
     try {
+        LOG_KNOWHERE_INFO_ << "start get vector by id 2";
         p_x = new float[dim * rows];
         for (int64_t i = 0; i < rows; i++) {
             int64_t id = p_ids[i];
             KNOWHERE_THROW_IF_NOT_FMT(id >= 0 && id < index_->cur_element_count, "invalid id %ld", id);
             memcpy(p_x + i * dim, index_->getDataByInternalId(id), dim * sizeof(float));
         }
+        LOG_KNOWHERE_INFO_ << "start get vector by id 3";
     } catch (std::exception& e) {
         if (p_x != nullptr) {
             delete[] p_x;
         }
         KNOWHERE_THROW_MSG(e.what());
     }
+    LOG_KNOWHERE_INFO_ << "start get vector by id 4";
     return GenResultDataset(p_x);
 }
 
