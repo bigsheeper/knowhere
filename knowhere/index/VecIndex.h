@@ -82,6 +82,7 @@ class VecIndex : public Index {
 
     virtual DatasetPtr
     GetVectorById(const DatasetPtr& dataset, const Config& config) {
+        LOG_KNOWHERE_INFO_ << "should not happen";
         KNOWHERE_THROW_MSG("GetVectorById not supported yet");
     }
 
