@@ -141,10 +141,16 @@ IndexHNSW::GetVectorById(const DatasetPtr& dataset_ptr, const Config& config) {
         if (p_x != nullptr) {
             delete[] p_x;
         }
+        LOG_KNOWHERE_INFO_ << "start get vector by id 3.5";
         KNOWHERE_THROW_MSG(e.what());
     }
     LOG_KNOWHERE_INFO_ << "start get vector by id 4";
-    return GenResultDataset(p_x);
+    if (p_x == nullptr) {
+        KNOWHERE_THROW_MSG("dyh invalid result");
+    }
+    auto b = GenResultDataset(p_x);
+    LOG_KNOWHERE_INFO_ << "start get vector by id 5";
+    return b;
 }
 
 DatasetPtr
