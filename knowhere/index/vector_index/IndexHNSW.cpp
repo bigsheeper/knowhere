@@ -127,28 +127,28 @@ IndexHNSW::GetVectorById(const DatasetPtr& dataset_ptr, const Config& config) {
 
     GET_DATA_WITH_IDS(dataset_ptr)
 
-    float* p_x = nullptr;
+    float* data = nullptr;
     try {
-        LOG_KNOWHERE_INFO_ << "start get vector by id 2";
-        p_x = new float[dim * rows];
+        data = new float[dim * rows];
+        LOG_KNOWHERE_INFO_ << "start get vector by id 3, dim:" << dim << ", rows:" << rows;
         for (int64_t i = 0; i < rows; i++) {
             int64_t id = p_ids[i];
-            KNOWHERE_THROW_IF_NOT_FMT(id >= 0 && id < index_->cur_element_count, "invalid id %ld", id);
-            memcpy(p_x + i * dim, index_->getDataByInternalId(id), dim * sizeof(float));
+            assert(id >= 0 && id < (int64_t)index_->cur_element_count);
+            std::copy_n((float*)index_->getDataByInternalId(id), dim, data + i * dim);
         }
-        LOG_KNOWHERE_INFO_ << "start get vector by id 3";
+        return GenResultDataset(data);
     } catch (std::exception& e) {
-        if (p_x != nullptr) {
-            delete[] p_x;
+        if (data != nullptr) {
+            delete[] data;
         }
         LOG_KNOWHERE_INFO_ << "start get vector by id 3.5";
         KNOWHERE_THROW_MSG(e.what());
     }
     LOG_KNOWHERE_INFO_ << "start get vector by id 4";
-    if (p_x == nullptr) {
+    if (data == nullptr) {
         KNOWHERE_THROW_MSG("dyh invalid result");
     }
-    auto b = GenResultDataset(p_x);
+    auto b = GenResultDataset(data);
     LOG_KNOWHERE_INFO_ << "start get vector by id 5";
     return b;
 }
